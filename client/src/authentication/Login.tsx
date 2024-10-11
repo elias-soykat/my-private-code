@@ -1,8 +1,8 @@
-import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import validator from "validator";
-import { useLogin } from "./useLogin";
 import MiniSpinner from "../ui/MiniSpinner";
+import { useLogin } from "./useLogin";
 
 type FormData = {
   email: string;
@@ -12,7 +12,6 @@ function Login() {
   const { register, handleSubmit, formState } = useForm<FormData>();
 
   const { errors } = formState;
-
   const { isLoggingIn, loginFn } = useLogin();
 
   function onSubmit(data: FormData) {
@@ -109,8 +108,8 @@ function Login() {
             </button>
 
             <h3 className="text-center text-[1.6rem] leading-[2.4rem] text-[#737373]">
-              Don’t have an account?{" "}
-              <Link to="/signup" className="text-[#633cff]">
+              Don’t have an account ?{" "}
+              <Link to="/signup" className="ml-4 text-[#633cff]">
                 Create account
               </Link>
             </h3>

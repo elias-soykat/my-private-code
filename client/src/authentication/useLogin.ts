@@ -1,7 +1,7 @@
 import { useMutation } from "@tanstack/react-query";
-import { login } from "../utils/api";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { login } from "../utils/api";
 
 export function useLogin() {
   const navigate = useNavigate();
@@ -9,11 +9,11 @@ export function useLogin() {
     mutationFn: (details: { email: string; password: string }) =>
       login(details),
     onSuccess: () => {
-      toast.success("Login Successful");
+      toast.success("Login successfully");
       navigate("/add-links");
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: (error: { response: { data: { message: string } } }) => {
+      toast.error(error.response.data.message);
     },
   });
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { LinkProps } from "../contexts/LinksContext";
+import { handleError } from "./helper";
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
@@ -14,35 +15,27 @@ export async function signUp({
   confirmPassword: string;
 }) {
   try {
-    const { data } = await axios.post(`${VITE_BASE_URL}/signup`, {
+    const { data } = await axios.post(`${VITE_BASE_URL}/users/signup`, {
       email,
       password,
       confirmPassword,
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function verifyEmail(token: string) {
   try {
-    const { data } = await axios.get(`${VITE_BASE_URL}/verify-email`, {
+    const { data } = await axios.get(`${VITE_BASE_URL}/users/verify-email`, {
       params: { token },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
@@ -54,39 +47,30 @@ export async function login({
   password: string;
 }) {
   try {
-    const { data } = await axios.post(`${VITE_BASE_URL}/login`, {
+    const { data } = await axios.post(`${VITE_BASE_URL}/users/login`, {
       email,
       password,
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     Cookies.set("jwt", data.token);
     Cookies.set("userId", data.data.user._id);
     Cookies.set("userMail", data.data.user.email);
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function forgotPassword(email: string) {
   try {
-    const { data } = await axios.post(`${VITE_BASE_URL}/forgotPassword`, {
+    const { data } = await axios.post(`${VITE_BASE_URL}/users/forgotPassword`, {
       email,
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
-    console.log(data);
     Cookies.set("forgotMail", email);
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
@@ -100,36 +84,28 @@ export async function resetPassword({
   confirmPassword: string;
 }) {
   try {
-    const { data } = await axios.patch(`${VITE_BASE_URL}/resetPassword`, {
+    const { data } = await axios.patch(`${VITE_BASE_URL}/users/resetPassword`, {
       token,
       password,
       confirmPassword,
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function logout() {
   try {
-    const { data } = await axios.post(`${VITE_BASE_URL}/logout`);
+    const { data } = await axios.post(`${VITE_BASE_URL}/users/logout`);
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     Cookies.remove("jwt");
     Cookies.remove("userId");
     Cookies.remove("userMail");
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
@@ -142,18 +118,13 @@ export async function getUsersLink() {
       },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function createUserLink(links: LinkProps[]) {
-  console.log(links);
   const token = Cookies.get("jwt");
   try {
     const { data } = await axios.post(`${VITE_BASE_URL}/links`, links, {
@@ -162,13 +133,9 @@ export async function createUserLink(links: LinkProps[]) {
       },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
@@ -185,7 +152,7 @@ export async function updateUserProfile({
   const email = Cookies.get("userMail");
   try {
     const { data } = await axios.patch(
-      `${VITE_BASE_URL}/profile-update`,
+      `${VITE_BASE_URL}/users/profile-update`,
       {
         firstName,
         lastName,
@@ -199,63 +166,47 @@ export async function updateUserProfile({
       },
     );
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function getUserProfile() {
   const token = Cookies.get("jwt");
   try {
-    const { data } = await axios.get(`${VITE_BASE_URL}/profile-update`, {
+    const { data } = await axios.get(`${VITE_BASE_URL}/users/profile-update`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function getOfflineUserProfile(id: string) {
   try {
-    const { data } = await axios.get(`${VITE_BASE_URL}/offline-profile`, {
+    const { data } = await axios.get(`${VITE_BASE_URL}/users/offline-profile`, {
       params: { id },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }
 
 export async function getOfflineUserLinks(id: string) {
   try {
-    const { data } = await axios.get(`${VITE_BASE_URL}/offline-links`, {
+    const { data } = await axios.get(`${VITE_BASE_URL}/links/offline-links`, {
       params: { id },
     });
 
-    if (data.status === "fail") {
-      throw new Error(data.message);
-    }
     return data;
   } catch (error) {
-    console.error(error);
-    throw error;
+    handleError(error);
   }
 }

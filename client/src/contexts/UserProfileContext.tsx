@@ -20,6 +20,7 @@ type UserState = {
   updateFirstName: (newFirstName: string) => void;
   updateLastName: (newLastName: string) => void;
   updatePhoto: (newPhoto: string) => void;
+  isVerified: boolean;
 };
 
 const UsersContext = createContext<UserState | null>(null);
@@ -28,7 +29,7 @@ function UsersProvider({ children }: { children: ReactNode }) {
   const [firstName, setFirstName] = useState("");
   const [lastName, setLastName] = useState("");
   const [photo, setPhoto] = useState("");
-
+  const [isVerified, setIsVerified] = useState(false);
   const { userProfile } = useGetUserProfile();
 
   function updateFirstName(newFirstName: string) {
@@ -48,10 +49,12 @@ function UsersProvider({ children }: { children: ReactNode }) {
     const firstNameDb = dataDb?.[0].firstName;
     const lastNameDb = dataDb?.[0].lastName;
     const photoDb = dataDb?.[0].photo;
+    const isVerified = dataDb?.[0].isVerified;
 
     setFirstName(firstNameDb || "");
     setLastName(lastNameDb || "");
     setPhoto(photoDb || "");
+    setIsVerified(isVerified);
   }, [dataDb]);
 
   return (
@@ -63,6 +66,7 @@ function UsersProvider({ children }: { children: ReactNode }) {
         updateFirstName,
         updateLastName,
         updatePhoto,
+        isVerified,
       }}
     >
       {children}

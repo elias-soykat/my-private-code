@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { updateUserProfile } from "../../utils/api";
 import toast from "react-hot-toast";
+import { updateUserProfile } from "../../utils/api";
 
 export function useUpdateProfile() {
   const { mutate: updateProfile, isPending: isUpdating } = useMutation({
@@ -12,12 +12,10 @@ export function useUpdateProfile() {
     onSuccess: () => {
       toast.success("Profile updated successfully");
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: (error: { response: { data: { message: string } } }) => {
+      toast.error(error.response.data.message);
     },
   });
-
-  console.log(isUpdating);
 
   return { updateProfile, isUpdating };
 }

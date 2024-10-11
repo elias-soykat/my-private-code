@@ -1,20 +1,20 @@
-import { PiGithubLogoFill, PiDevToLogoFill } from "react-icons/pi";
 import {
-  SiFrontendmentor,
+  FaCodepen,
+  FaFacebook,
+  FaFreeCodeCamp,
+  FaLinkedin,
+  FaStackOverflow,
+  FaTwitch,
+  FaYoutube,
+} from "react-icons/fa";
+import { IoLogoTwitter } from "react-icons/io";
+import { PiDevToLogoFill, PiGithubLogoFill } from "react-icons/pi";
+import {
   SiCodewars,
+  SiFrontendmentor,
   SiGitlab,
   SiHashnode,
 } from "react-icons/si";
-import { IoLogoTwitter } from "react-icons/io";
-import {
-  FaLinkedin,
-  FaYoutube,
-  FaFacebook,
-  FaTwitch,
-  FaCodepen,
-  FaFreeCodeCamp,
-  FaStackOverflow,
-} from "react-icons/fa";
 
 export function getCorrespondingLogo(name: string, size?: string) {
   if (name === "Github") return <PiGithubLogoFill size={size} />;
@@ -69,3 +69,16 @@ export function getRightProfileUrl(name: string) {
     return "https://www.freecodecamp.org/news/author";
   if (name === "StackOverflow") return "https://www.stackoverflow.com/users/";
 }
+
+export const handleError = (error: unknown) => {
+  throw error;
+};
+
+export const checkStatusFailed = (data: {
+  status: string;
+  message: string;
+}) => {
+  if (data.status === "fail") {
+    throw new Error(data.message);
+  }
+};

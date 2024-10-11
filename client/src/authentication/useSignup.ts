@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { signUp as signUpApi } from "../utils/api";
 import toast from "react-hot-toast";
+import { signUp as signUpApi } from "../utils/api";
 
 export function UseSignup() {
   const { mutate: signUp, isPending: isSigningUp } = useMutation({
@@ -12,8 +12,8 @@ export function UseSignup() {
     onSuccess: (data) => {
       toast.success(data.message);
     },
-    onError: (error) => {
-      toast.error(error.message);
+    onError: (error: { response: { data: { message: string } } }) => {
+      toast.error(error.response.data.message);
     },
   });
 

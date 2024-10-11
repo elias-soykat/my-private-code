@@ -1,10 +1,10 @@
-import { useLocation, useNavigate } from "react-router-dom";
-import { useForm } from "react-hook-form";
-import MiniSpinner from "../ui/MiniSpinner";
 import Cookies from "js-cookie";
-import { useResetPassword } from "./useResetPassword";
-import toast from "react-hot-toast";
 import { useEffect } from "react";
+import { useForm } from "react-hook-form";
+import toast from "react-hot-toast";
+import { useLocation, useNavigate } from "react-router-dom";
+import MiniSpinner from "../ui/MiniSpinner";
+import { useResetPassword } from "./useResetPassword";
 
 type ResetPasswordFormData = {
   password: string;

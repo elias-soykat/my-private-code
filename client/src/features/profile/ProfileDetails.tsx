@@ -1,11 +1,12 @@
+import Cookie from "js-cookie";
 import {
   FieldErrors,
   UseFormHandleSubmit,
   UseFormRegister,
 } from "react-hook-form";
-import Cookie from "js-cookie";
-import { useUserContext } from "../../contexts/UserProfileContext";
+import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { IoImageOutline } from "react-icons/io5";
+import { useUserContext } from "../../contexts/UserProfileContext";
 
 type FormData = {
   firstName: string;
@@ -26,7 +27,8 @@ function ProfileDetails({
   isUpdating,
   onSubmitData,
 }: ProfileDetailsProps) {
-  const { updatePhoto, photo, firstName, lastName } = useUserContext();
+  const { updatePhoto, photo, firstName, lastName, isVerified } =
+    useUserContext();
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhoto = event.target.files![0];
@@ -42,18 +44,26 @@ function ProfileDetails({
 
   return (
     <div className="border-b border-solid border-[#d9d9d9] bg-white p-16 pb-0">
-      <h1 className="mobile:text-[2.4rem] mobile:leading-[3.6rem] pb-[0.8rem] text-[3.2rem] font-bold leading-[4.8rem] text-[#333]">
-        Profile Details
-      </h1>
+      <div className="flex items-center justify-between">
+        <h1 className="pb-[0.8rem] text-4xl font-bold leading-[4.8rem] text-[#333] sm:text-5xl mobile:text-xl mobile:leading-[3.6rem]">
+          Profile Details
+        </h1>
+        <div className="flex items-center gap-4">
+          <p className="text-xl font-semibold text-gray-500">
+            {isVerified ? "Verified" : "Unverified"}
+          </p>
+          <IoMdCheckmarkCircleOutline
+            className={`text-green-500 ${isVerified ? "" : "hidden"}`}
+            size="2rem"
+          />
+        </div>
+      </div>
       <p className="text-[1.6rem] leading-[2.4rem] text-[#737373]">
         Add your details to create a personal touch to your profile.
       </p>
 
       <form onSubmit={handleSubmit(onSubmitData)}>
-        <div className="mobile:flex-col mobile:items-stretch flex items-center justify-between gap-[1.6rem] p-8">
-          <span className="w-[24rem] text-[1.6rem] leading-[2.4rem] text-[#737373]">
-            Profile picture
-          </span>
+        <div className="flex items-center justify-between gap-[1.6rem] p-8 mobile:flex-col mobile:items-stretch">
           <input
             type="file"
             name="image"
@@ -62,10 +72,10 @@ function ProfileDetails({
             accept="image/jpg, image/png"
             onChange={handlePhotoChange}
           />
-          <div className="mobile:items-stretch mobile:flex-col flex w-full items-center gap-[2.4rem]">
+          <div className="flex w-full items-center gap-[2.4rem] mobile:flex-col mobile:items-stretch">
             <label
               htmlFor="image"
-              className={`flex w-[19.2rem] cursor-pointer flex-col items-center gap-[0.8rem] rounded-[1.2rem] bg-[#efebff] bg-cover bg-center px-12 py-24 ${photo ? "text-white" : "text-[#633cff]"}`}
+              className={`flex w-[16rem] cursor-pointer flex-col items-center gap-[0.8rem] rounded-[1.2rem] bg-[#efebff] bg-cover bg-center px-12 py-16 ${photo ? "text-white" : "text-[#633cff]"}`}
               style={{
                 backgroundImage: photo
                   ? `linear-gradient(0deg, rgba(0, 0, 0, 0.50) 0%, rgba(0, 0, 0, 0.50) 100%), url(${photo})`
@@ -73,17 +83,17 @@ function ProfileDetails({
               }}
             >
               <IoImageOutline size={"4rem"} />
-              <span className="text-[1.6rem] font-semibold leading-[2.4rem]">
+              <span className="text-xl font-semibold leading-[2.4rem]">
                 + Upload Image
               </span>
             </label>
-            <p className="mobile:w-full w-[21.5rem] text-[1.2rem] leading-[1.8rem] text-[#737373]">
+            <p className="w-[21.5rem] text-[1.2rem] leading-[1.8rem] text-[#737373] mobile:w-full">
               Image must be below 1024x1024px. Use PNG or JPG format.
             </p>
           </div>
         </div>
         <div className="space-y-[1.2rem] p-8">
-          <div className="mobile:flex-col mobile:items-start mobile:gap-2 flex items-center gap-[1.6rem]">
+          <div className="flex items-center gap-[1.6rem] mobile:flex-col mobile:items-start mobile:gap-2">
             <label
               htmlFor="firstName"
               className="w-[24rem] text-[1.6rem] leading-[2.4rem] text-[#737373]"
@@ -113,7 +123,7 @@ function ProfileDetails({
               )}
             </div>
           </div>
-          <div className="mobile:flex-col mobile:items-start mobile:gap-2 flex items-center gap-[1.6rem]">
+          <div className="flex items-center gap-[1.6rem] mobile:flex-col mobile:items-start mobile:gap-2">
             <label
               htmlFor="lastName"
               className="w-[24rem] text-[1.6rem] leading-[2.4rem] text-[#737373]"
@@ -143,7 +153,7 @@ function ProfileDetails({
               )}
             </div>
           </div>
-          <div className="mobile:flex-col mobile:items-start mobile:gap-2 flex items-center gap-[1.6rem]">
+          <div className="flex items-center gap-[1.6rem] mobile:flex-col mobile:items-start mobile:gap-2">
             <label
               htmlFor="email"
               className="w-[24rem] text-[1.6rem] leading-[2.4rem] text-[#737373]"

@@ -14,7 +14,6 @@ function Signup() {
     useForm<FormData>();
 
   const { errors } = formState;
-
   const { signUp, isSigningUp } = UseSignup();
 
   function onSubmit(data: FormData) {

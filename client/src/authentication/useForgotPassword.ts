@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
-import { forgotPassword as forgotPasswordApi } from "../utils/api";
 import toast from "react-hot-toast";
+import { forgotPassword as forgotPasswordApi } from "../utils/api";
 
 export function useForgotPassword() {
   const { mutate: forgotPassword, isPending: isForgotPasswordLoading } =
@@ -9,8 +9,8 @@ export function useForgotPassword() {
       onSuccess: (data) => {
         toast.success(data.message);
       },
-      onError: (error) => {
-        toast.error(error.message);
+      onError: (error: { response: { data: { message: string } } }) => {
+        toast.error(error.response.data.message);
       },
     });
 
