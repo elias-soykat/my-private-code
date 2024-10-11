@@ -3,62 +3,64 @@ const bcrypt = require("bcryptjs");
 const validator = require("validator");
 const crypto = require("crypto");
 
-const userSchema = new mongoose.Schema({
-  firstName: {
-    type: String,
-    minLength: 3,
-    maxLength: 20,
-    trim: true,
-    validate: [validator.isAlpha, "First name must only contain letters"],
-  },
-  lastName: {
-    type: String,
-    minLength: 3,
-    maxLength: 20,
-    trim: true,
-    validate: [validator.isAlpha, "Last name must only contain letters"],
-  },
-  photo: String,
-  email: {
-    type: String,
-    required: [true, "Please enter your email address"],
-    lowercase: true,
-    validate: [validator.isEmail, "Please enter a valid email address"],
-  },
-  password: {
-    type: String,
-    required: [true, "Please enter your password"],
-    minLength: 8,
-    select: false,
-  },
-  confirmPassword: {
-    type: String,
-    required: [true, "Please confirm your password"],
-    validate: {
-      validator: function (val) {
-        return val === this.password;
+const userSchema = new mongoose.Schema(
+  {
+    firstName: {
+      type: String,
+      minLength: 3,
+      maxLength: 20,
+      trim: true,
+      validate: [validator.isAlpha, "First name must only contain letters"],
+    },
+    lastName: {
+      type: String,
+      minLength: 3,
+      maxLength: 20,
+      trim: true,
+      validate: [validator.isAlpha, "Last name must only contain letters"],
+    },
+    photo: String,
+    email: {
+      type: String,
+      required: [true, "Please enter your email address"],
+      lowercase: true,
+      validate: [validator.isEmail, "Please enter a valid email address"],
+    },
+    password: {
+      type: String,
+      required: [true, "Please enter your password"],
+      minLength: 8,
+      select: false,
+    },
+    confirmPassword: {
+      type: String,
+      required: [true, "Please confirm your password"],
+      validate: {
+        validator: function (val) {
+          return val === this.password;
+        },
+        message: "Passwords do not match",
       },
-      message: "Passwords do not match",
     },
-  },
-  isVerified: {
-    type: Boolean,
-    default: false,
-  },
-  emailVerificationToken: { type: String, select: false },
-  passwordResetToken: { type: String, select: false },
-  passwordResetExpires: { type: Date, select: false },
-  links: [
-    {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Link",
+    isVerified: {
+      type: Boolean,
+      default: false,
     },
-  ],
-});
+    emailVerificationToken: { type: String, select: false },
+    passwordResetToken: { type: String, select: false },
+    passwordResetExpires: { type: Date, select: false },
+    links: [
+      {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "Link",
+      },
+    ],
+  },
+  { versionKey: false, timestamps: true }
+);
 
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
-
   this.password = await bcrypt.hash(this.password, 12);
 
   this.confirmPassword = undefined;

@@ -8,7 +8,6 @@ const handleCastErrorDB = (err) => {
 const handleDuplicateFieldsDB = (err) => {
   const fields = Object.keys(err.keyValue)[0];
   const value = err.keyValue[fields];
-
   const message = `This email is already registered. Please use a different email address.`;
 
   return new AppError(message, 400);
@@ -16,7 +15,6 @@ const handleDuplicateFieldsDB = (err) => {
 
 const handleValidationErrorDB = (err, res) => {
   const errors = Object.values(err.errors).map((el) => el.message);
-
   const message = ` ${errors.join(". ")}`;
   return new AppError(message, 400);
 };
@@ -37,19 +35,13 @@ const sendErrorDev = (err, res) => {
 };
 
 const sendErrorProd = (err, res) => {
-  // Operational, trusted error: send message to client
   if (err.isOperational) {
     res.status(err.statusCode).json({
       status: err.status,
       message: err.message,
     });
-
-    // Programming or other unknown error: don't leak error details
   } else {
-    // 1) Log the error
     console.error("ERROR 💥", err);
-
-    // 2) Send generic message
     res.status(500).json({
       status: "error",
       message:

@@ -29,7 +29,6 @@ function createSendToken(user, statusCode, res) {
   };
 
   if (process.env.NODE_ENV === "production") cookieOptions.secure = true;
-
   res.cookie("jwt", token, cookieOptions);
 
   // Remove password from output
@@ -45,68 +44,59 @@ function createSendToken(user, statusCode, res) {
 }
 
 exports.signup = catchAsync(async (req, res, next) => {
-  // create new user from request body
+  const existingUser = await User.findOne({ email: req.body.email });
+  if (existingUser) {
+    return next(
+      new AppError("User already exists with this email address.", 400)
+    );
+  }
+
   const newUser = new User({
     email: req.body.email,
     password: req.body.password,
     confirmPassword: req.body.confirmPassword,
   });
 
-  // Call the method to create the email verification token
   const verificationToken = newUser.createEmailVerificationToken();
-  const verificationLink = `${process.env.FRONTEND_URL}/verify-email?token=${verificationToken}`;
+  await newUser.save();
 
-  // Construct the email options
+  const verificationLink = `${process.env.BACKEND_LIVE_URL}/verify-email?token=${verificationToken}`;
   const emailOptions = {
     email: req.body.email,
     subject: "Welcome to DevLinks! Confirm Your Email Address",
     message: `
-    <div style="background-color: #fafafa; padding: 20px; border-radius: 10px;">
-    <h1 style="color: #633cff; margin-bottom: 20px;">Welcome aboard!</h1>
-    <p style="color: #737373; margin-bottom: 15px;">Greetings from DevLinks! We're thrilled to have you join our community.</p>
-    <p style="color: #737373; margin-bottom: 15px;">To complete your registration and unlock all the amazing features, please click the button below to verify your email address:</p>
-    <p style="text-align: center; margin-bottom: 20px;"><a href="${verificationLink}" style="background-color: #633cff; color: #fafafa; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Email Address</a></p>
-    <p style="color: #737373; margin-bottom: 15px;">Alternatively, you can copy and paste the following link into your browser:</p>
-    <p style="color: #737373; margin-bottom: 15px;"><em>${verificationLink}</em></p>
-    <p style="color: #737373; font-weight: bold;">If you didn't sign up for DevLinks, no worries! Simply ignore this email.</p>
-  </div>
+      <div style="background-color: #fafafa; padding: 20px; border-radius: 10px;">
+        <h1 style="color: #633cff; margin-bottom: 20px;">Welcome aboard!</h1>
+        <p style="color: #737373; margin-bottom: 15px;">Greetings from DevLinks! We're thrilled to have you join our community.</p>
+        <p style="color: #737373; margin-bottom: 15px;">To complete your registration and unlock all the amazing features, please click the button below to verify your email address:</p>
+        <p style="text-align: center; margin-bottom: 20px;"><a href="${verificationLink}" style="background-color: #633cff; color: #fafafa; padding: 10px 20px; border-radius: 5px; text-decoration: none;">Verify Email Address</a></p>
+        <p style="color: #737373; margin-bottom: 15px;">Alternatively, you can copy and paste the following link into your browser:</p>
+        <p style="color: #737373; margin-bottom: 15px;"><em>${verificationLink}</em></p>
+        <p style="color: #737373; font-weight: bold;">If you didn't sign up for DevLinks, no worries! Simply ignore this email.</p>
+      </div>
     `,
   };
 
-  // Send verification email
   await sendEmail(emailOptions);
-
   res.status(201).json({
     status: "success",
     message: "Verification email sent. Please verify your email address.",
   });
-
-  // Save the user to the database
-  await newUser.save();
 });
 
 exports.verifyEmail = catchAsync(async (req, res, next) => {
-  // Get the token from the query string
   const { token } = req.query;
 
-  // Convert the token to a hashed value
   const hashedToken = crypto.createHash("sha256").update(token).digest("hex");
-
-  // Find the user with the hashed token
   const user = await User.findOne({
     emailVerificationToken: hashedToken,
-    // emailVerificationTokenExpires: { $gt: Date.now() }, // Check if the token is not expired
   });
 
-  // Send an error response if the user is not found
   if (!user) {
     return next(new AppError("Invalid or expired verification token.", 400));
   }
 
-  // Update the user's verification status
   user.isVerified = true;
-  // user.emailVerificationToken = undefined;
-  // user.emailVerificationTokenExpires = undefined;
   await user.save({ validateBeforeSave: false });
 
   res.status(200).json({
@@ -116,18 +106,13 @@ exports.verifyEmail = catchAsync(async (req, res, next) => {
 });
 
 exports.login = catchAsync(async (req, res, next) => {
-  // Get email and password from request body
   const { email, password } = req.body;
 
-  // Check if email and password are provided
   if (!email || !password) {
     return next(new AppError("Please provide email and password.", 400));
   }
 
-  // Find the user with the email in our database
   const user = await User.findOne({ email }).select("+password");
-
-  // send an error response if the user is not found or the password is incorrect
   if (!user || !(await user.matchPassword(password, user.password))) {
     return next(new AppError("Invalid email or password.", 401));
   }
@@ -141,8 +126,6 @@ exports.login = catchAsync(async (req, res, next) => {
   }
 
   req.user = user;
-
-  // Create a token for the user
   createSendToken(user, 200, res);
 });
 
@@ -155,15 +138,16 @@ exports.protected = catchAsync(async (req, res, next) => {
     token = req.headers.authorization.split(" ")[1];
   }
 
+  if (!token || token.length < 20) {
+    return next(new AppError("Invalid token provided", 401));
+  }
+
   if (!token) {
     return next(
       new AppError("You are not logged in! Please log in to get access.", 401)
     );
   }
-  // 2) Verification token
   const decoded = await promisify(jwt.verify)(token, process.env.JWT_SECRET);
-
-  // 3) Check if user still exists
   const currentUser = await User.findById(decoded.id);
   if (!currentUser) {
     return next(
@@ -174,9 +158,7 @@ exports.protected = catchAsync(async (req, res, next) => {
     );
   }
 
-  // GRANT ACCESS TO PROTECTED ROUTE
   req.user = currentUser;
-
   next();
 });
 
@@ -191,12 +173,10 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetPasswordToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  // const resetPasswordLink = `http://localhost:5173/reset-password?token=${resetPasswordToken}`;
-  const resetPasswordLink = `https://toyan-devlinks.vercel.app/reset-password?token=${resetPasswordToken}`;
-
+  const resetPasswordLink = `${process.env.BACKEND_LIVE_URL}/reset-password?token=${resetPasswordToken}`;
   const emailOptions = {
     email: req.body.email,
-    subject: "Toyan DevLinks - Reset Password (Expires in 10 Minutes)",
+    subject: "DevLinks - Reset Password (Expires in 10 Minutes)",
     message: `
     <div style="background-color: #fafafa; padding: 20px; border-radius: 10px;">
     <h1 style="color: #633cff; margin-bottom: 20px;">Hello there!</h1>
