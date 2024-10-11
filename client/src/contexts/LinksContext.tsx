@@ -12,7 +12,7 @@ type LinksState = {
   addLink: (name: string, link: string, id: number) => void;
   updateLink: (index: number, updatedFields: Partial<LinkProps>) => void;
   deleteLink: (index: number) => void;
-  setLinks: any;
+  setLinks: (links: LinkProps[]) => void;
 };
 
 const LinksContext = createContext<LinksState | null>(null);

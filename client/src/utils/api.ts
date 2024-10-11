@@ -1,8 +1,8 @@
-// const BASE_URL = "http://127.0.0.1:5000/devlinks-api/v1/users";
-const BASE_URL = "https://toyan-devlinks-api.vercel.app/devlinks-api/v1/users";
-
+import axios from "axios";
 import Cookies from "js-cookie";
 import { LinkProps } from "../contexts/LinksContext";
+
+const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
 export async function signUp({
   email,
@@ -14,39 +14,34 @@ export async function signUp({
   confirmPassword: string;
 }) {
   try {
-    const response = await fetch(`${BASE_URL}/signup`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-        confirmPassword,
-      }),
+    const { data } = await axios.post(`${VITE_BASE_URL}/signup`, {
+      email,
+      password,
+      confirmPassword,
     });
-    const data = await response.json();
+
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
 
 export async function verifyEmail(token: string) {
   try {
-    const response = await fetch(`${BASE_URL}/verify-email?token=${token}`);
+    const { data } = await axios.get(`${VITE_BASE_URL}/verify-email`, {
+      params: { token },
+    });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -59,18 +54,11 @@ export async function login({
   password: string;
 }) {
   try {
-    const response = await fetch(`${BASE_URL}/login`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        email,
-        password,
-      }),
+    const { data } = await axios.post(`${VITE_BASE_URL}/login`, {
+      email,
+      password,
     });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
@@ -79,22 +67,17 @@ export async function login({
     Cookies.set("userMail", data.data.user.email);
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
 
 export async function forgotPassword(email: string) {
   try {
-    const response = await fetch(`${BASE_URL}/forgotPassword`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ email }),
+    const { data } = await axios.post(`${VITE_BASE_URL}/forgotPassword`, {
+      email,
     });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
@@ -102,7 +85,7 @@ export async function forgotPassword(email: string) {
     Cookies.set("forgotMail", email);
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -117,34 +100,25 @@ export async function resetPassword({
   confirmPassword: string;
 }) {
   try {
-    const response = await fetch(`${BASE_URL}/resetPassword?token=${token}`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ password, confirmPassword }),
+    const { data } = await axios.patch(`${VITE_BASE_URL}/resetPassword`, {
+      token,
+      password,
+      confirmPassword,
     });
-    const data = await response.json();
 
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
 
 export async function logout() {
   try {
-    const response = await fetch(`${BASE_URL}/logout`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-    });
-    const data = await response.json();
+    const { data } = await axios.post(`${VITE_BASE_URL}/logout`);
 
     if (data.status === "fail") {
       throw new Error(data.message);
@@ -154,7 +128,7 @@ export async function logout() {
     Cookies.remove("userMail");
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -162,22 +136,18 @@ export async function logout() {
 export async function getUsersLink() {
   const token = Cookies.get("jwt");
   try {
-    const response = await fetch(`${BASE_URL}/links`, {
-      method: "GET",
+    const { data } = await axios.get(`${VITE_BASE_URL}/links`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
-
+    console.error(error);
     throw error;
   }
 }
@@ -186,22 +156,18 @@ export async function createUserLink(links: LinkProps[]) {
   console.log(links);
   const token = Cookies.get("jwt");
   try {
-    const response = await fetch(`${BASE_URL}/links`, {
-      method: "POST",
+    const { data } = await axios.post(`${VITE_BASE_URL}/links`, links, {
       headers: {
-        "Content-type": "application/json",
         Authorization: `Bearer ${token}`,
       },
-      body: JSON.stringify(links),
     });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -218,27 +184,27 @@ export async function updateUserProfile({
   const token = Cookies.get("jwt");
   const email = Cookies.get("userMail");
   try {
-    const response = await fetch(`${BASE_URL}/profile-update`, {
-      method: "PATCH",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
-      },
-      body: JSON.stringify({
+    const { data } = await axios.patch(
+      `${VITE_BASE_URL}/profile-update`,
+      {
         firstName,
         lastName,
         email,
         photo,
-      }),
-    });
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
@@ -246,49 +212,50 @@ export async function updateUserProfile({
 export async function getUserProfile() {
   const token = Cookies.get("jwt");
   try {
-    const response = await fetch(`${BASE_URL}/profile-update`, {
-      method: "GET",
+    const { data } = await axios.get(`${VITE_BASE_URL}/profile-update`, {
       headers: {
-        "Content-Type": "application/json",
         Authorization: `Bearer ${token}`,
       },
     });
 
-    const data = await response.json();
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
 
 export async function getOfflineUserProfile(id: string) {
   try {
-    const response = await fetch(`${BASE_URL}/offline-profile?id=${id}`);
-    const data = await response.json();
+    const { data } = await axios.get(`${VITE_BASE_URL}/offline-profile`, {
+      params: { id },
+    });
+
     if (data.status === "fail") {
       throw new Error(data.message);
     }
-
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }
+
 export async function getOfflineUserLinks(id: string) {
   try {
-    const response = await fetch(`${BASE_URL}/offline-links?id=${id}`);
-    const data = await response.json();
+    const { data } = await axios.get(`${VITE_BASE_URL}/offline-links`, {
+      params: { id },
+    });
+
     if (data.status === "fail") {
       throw new Error(data.message);
     }
     return data;
   } catch (error) {
-    console.log(error);
+    console.error(error);
     throw error;
   }
 }

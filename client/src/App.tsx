@@ -7,9 +7,9 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { LinksProvider } from "./contexts/LinksContext";
 import { UsersProvider } from "./contexts/UserProfileContext";
 
-import ProtectedRoute from "./ui/ProtectedRoute";
 import AppLayout from "./ui/AppLayout";
 import Loader from "./ui/Loader";
+import ProtectedRoute from "./ui/ProtectedRoute";
 
 import { Toaster } from "react-hot-toast";
 
