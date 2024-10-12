@@ -1,17 +1,18 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
-const linkSchema = new mongoose.Schema({
-  id: Number,
-  name: {
-    type: String,
-    required: [true, "Please add a name"],
+const linkSchema = new mongoose.Schema(
+  {
+    id: Number,
+    name: {
+      type: String,
+      required: [true, 'Please add a name'],
+    },
+    link: {
+      type: String,
+      required: [true, 'Please add a link'],
+    },
   },
-  link: {
-    type: String,
-    required: [true, "Please add a link"],
-  },
-});
+  { versionKey: false, timestamps: true }
+);
 
-const Link = mongoose.model("Link", linkSchema);
-
-module.exports = Link;
+module.exports = mongoose.model('Link', linkSchema);

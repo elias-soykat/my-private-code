@@ -1,50 +1,50 @@
-const mongoose = require("mongoose");
-require("dotenv").config();
-const app = require("./app");
+const mongoose = require('mongoose');
+const process = require('process');
+require('dotenv').config();
+const app = require('./app');
+const config = require('./config');
 
-process.on("uncaughtException", (err) => {
+process.on('uncaughtException', (err) => {
   console.error(
     `[${new Date().toISOString()}] Uncaught Exception: ${err.name} - ${
       err.message
     }`
   );
-  console.error("Shutting down due to uncaught exception...");
+  console.error('Shutting down due to uncaught exception...');
   process.exit(1);
 });
 
 (async () => {
   try {
-    const MONGO_URI = process.env.MONGO_URI;
-    await mongoose.connect(MONGO_URI);
-    console.log("Connected to MongoDB");
+    await mongoose.connect(config.MONGO_URI);
+    console.log('Connected to MongoDB');
   } catch (err) {
     console.error(`Failed to connect to MongoDB: ${err.message}`);
     process.exit(1);
   }
 })();
 
-const port = process.env.PORT || 3001;
 (() => {
-  const server = app.listen(port, () =>
-    console.log(`App running on port ${port}`)
+  const server = app.listen(config.PORT, () =>
+    console.log(`App running on port ${config.PORT}`)
   );
 
-  process.on("unhandledRejection", (err) => {
+  process.on('unhandledRejection', (err) => {
     console.error(
       `[${new Date().toISOString()}] Unhandled Rejection: ${err.name} - ${
         err.message
       }`
     );
-    console.error("Shutting down due to unhandled rejection...");
+    console.error('Shutting down due to unhandled rejection...');
     server.close(() => {
       process.exit(1);
     });
   });
 
-  process.on("SIGTERM", () => {
-    console.log("SIGTERM received. Shutting down gracefully...");
+  process.on('SIGTERM', () => {
+    console.log('SIGTERM received. Shutting down gracefully...');
     server.close(() => {
-      console.log("Process terminated");
+      console.log('Process terminated');
     });
   });
 })();

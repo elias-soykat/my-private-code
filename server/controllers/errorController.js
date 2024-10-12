@@ -1,29 +1,27 @@
-const AppError = require("../utils/appError");
+const config = require('../config');
+const AppError = require('../utils/appError');
 
 const handleCastErrorDB = (err) => {
   const message = `Invalid ${err.path}: ${err.value}`;
   return new AppError(message, 400);
 };
 
-const handleDuplicateFieldsDB = (err) => {
-  const fields = Object.keys(err.keyValue)[0];
-  const value = err.keyValue[fields];
+const handleDuplicateFieldsDB = () => {
   const message = `This email is already registered. Please use a different email address.`;
-
   return new AppError(message, 400);
 };
 
-const handleValidationErrorDB = (err, res) => {
+const handleValidationErrorDB = (err) => {
   const errors = Object.values(err.errors).map((el) => el.message);
-  const message = ` ${errors.join(". ")}`;
+  const message = ` ${errors.join('. ')}`;
   return new AppError(message, 400);
 };
 
 const handleJWTError = () =>
-  new AppError("Invalid token. Please log in again!", 401);
+  new AppError('Invalid token. Please log in again!', 401);
 
 const handleJWTExpiredError = () =>
-  new AppError("Your token has expired! Please log in again.", 401);
+  new AppError('Your token has expired! Please log in again.', 401);
 
 const sendErrorDev = (err, res) => {
   res.status(err.statusCode).json({
@@ -41,24 +39,24 @@ const sendErrorProd = (err, res) => {
       message: err.message,
     });
   } else {
-    console.error("ERROR 💥", err);
+    console.error('ERROR 💥', err);
     res.status(500).json({
-      status: "error",
+      status: 'error',
       message:
-        "Something went very wrong. Or check your internet connection and try again",
+        'Something went very wrong. Or check your internet connection and try again',
     });
   }
 };
 
-module.exports = (err, req, res, next) => {
+module.exports = (err, req, res) => {
   err.statusCode = err.statusCode || 500;
-  err.status = err.status || "error";
+  err.status = err.status || 'error';
 
-  if (process.env.NODE_ENV === "development") {
+  if (config.NODE_ENV === 'development') {
     sendErrorDev(err, res);
-  } else if (process.env.NODE_ENV === "production") {
+  } else if (config.NODE_ENV === 'production') {
     let error = { ...err, name: err.name, message: err.message };
-    if (error.name === "CastError") {
+    if (error.name === 'CastError') {
       error = handleCastErrorDB(error);
     }
 
@@ -66,15 +64,15 @@ module.exports = (err, req, res, next) => {
       error = handleDuplicateFieldsDB(error);
     }
 
-    if (error.name === "ValidationError") {
+    if (error.name === 'ValidationError') {
       error = handleValidationErrorDB(error);
     }
 
-    if (error.name === "JsonWebTokenError") {
+    if (error.name === 'JsonWebTokenError') {
       error = handleJWTError();
     }
 
-    if (error.name === "TokenExpiredError") {
+    if (error.name === 'TokenExpiredError') {
       error = handleJWTExpiredError();
     }
     sendErrorProd(error, res);
