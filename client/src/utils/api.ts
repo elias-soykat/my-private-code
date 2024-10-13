@@ -100,6 +100,7 @@ export async function logout() {
 export async function getUsersLink() {
   const token = Cookies.get("jwt");
   try {
+    if (!token) return null;
     const { data } = await axios.get(`${VITE_BASE_URL}/links`, {
       headers: { Authorization: `Bearer ${token}` },
     });
@@ -150,6 +151,8 @@ export async function updateUserProfile({
 
 export async function getUserProfile() {
   const token = Cookies.get("jwt");
+  if (!token) return null;
+
   try {
     const { data } = await axios.get(`${VITE_BASE_URL}/users/profile-update`, {
       headers: {

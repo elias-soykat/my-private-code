@@ -1,7 +1,3 @@
-import { HiOutlinePlus } from "react-icons/hi2";
-import EmptyLinksBox from "./EmptyLinksBox";
-import LinkItems from "./LinkItems";
-import { useLinks } from "../../contexts/LinksContext";
 import {
   DndContext,
   DragEndEvent,
@@ -18,6 +14,10 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy,
 } from "@dnd-kit/sortable";
+import { HiOutlinePlus } from "react-icons/hi2";
+import { useLinks } from "../../contexts/LinksContext";
+import EmptyLinksBox from "./EmptyLinksBox";
+import LinkItems from "./LinkItems";
 
 function ProfileCustomizeLinks({ isCreating }: { isCreating: boolean }) {
   const { links, addLink, setLinks } = useLinks();
@@ -46,11 +46,11 @@ function ProfileCustomizeLinks({ isCreating }: { isCreating: boolean }) {
   }
 
   return (
-    <div className="flex flex-col border-b border-solid border-[#d9d9d9] bg-white p-16 pb-0 mobile:p-[2.4rem] mobile:pb-0">
-      <h1 className="pb-[0.8rem] text-[3.2rem] font-bold leading-[4.8rem] text-[#333] mobile:text-[2.4rem] mobile:leading-[3.6rem]">
+    <div className="flex flex-col bg-white px-14 py-12 pb-0 mobile:p-[2.4rem] mobile:pb-0">
+      <h1 className="block pb-[0.8rem] text-[3.1rem] font-bold leading-[4.8rem] text-[#333] tablet:hidden mobile:text-[2.4rem] mobile:leading-[3.5rem]">
         Customize your links
       </h1>
-      <h3 className="pb-16 text-[1.6rem] leading-[2.4rem] text-[#737373]">
+      <h3 className="block pb-16 text-[1.6rem] leading-[2.4rem] text-[#737373] tablet:hidden">
         Add/edit/remove links below and then share all your profiles with the
         world!
       </h3>
