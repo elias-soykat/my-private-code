@@ -1,22 +1,20 @@
 import { useForm } from "react-hook-form";
 import { Link } from "react-router-dom";
 import validator from "validator";
-import { useForgotPassword } from "./useForgotPassword";
 import MiniSpinner from "../ui/MiniSpinner";
+import { useForgotPassword } from "./useForgotPassword";
 
-type ForgotPasswordFormData = {
+type ForgotPassword = {
   email: string;
 };
 
-function ForgotPassword() {
+export default function ForgotPassword() {
   const { register, handleSubmit, formState, reset } =
-    useForm<ForgotPasswordFormData>();
-
+    useForm<ForgotPassword>();
   const { errors } = formState;
-
   const { forgotPassword, isForgotPasswordLoading } = useForgotPassword();
 
-  function onSubmit(data: ForgotPasswordFormData) {
+  function onSubmit(data: ForgotPassword) {
     forgotPassword(data.email);
     reset();
   }
@@ -82,5 +80,3 @@ function ForgotPassword() {
     </section>
   );
 }
-
-export default ForgotPassword;

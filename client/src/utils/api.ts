@@ -1,19 +1,17 @@
 import axios from "axios";
 import Cookies from "js-cookie";
 import { LinkProps } from "../contexts/LinksContext";
-import { handleError } from "./helper";
+import {
+  handleError,
+  LoginType,
+  ResetPasswordType,
+  SignUpType,
+  UserProfileType,
+} from "./helper";
 
 const VITE_BASE_URL = import.meta.env.VITE_BASE_URL;
 
-export async function signUp({
-  email,
-  password,
-  confirmPassword,
-}: {
-  email: string;
-  password: string;
-  confirmPassword: string;
-}) {
+export async function signUp({ email, password, confirmPassword }: SignUpType) {
   try {
     const { data } = await axios.post(`${VITE_BASE_URL}/users/signup`, {
       email,
@@ -39,13 +37,7 @@ export async function verifyEmail(token: string) {
   }
 }
 
-export async function login({
-  email,
-  password,
-}: {
-  email: string;
-  password: string;
-}) {
+export async function login({ email, password }: LoginType) {
   try {
     const { data } = await axios.post(`${VITE_BASE_URL}/users/login`, {
       email,
@@ -78,11 +70,7 @@ export async function resetPassword({
   token,
   password,
   confirmPassword,
-}: {
-  token: string;
-  password: string;
-  confirmPassword: string;
-}) {
+}: ResetPasswordType) {
   try {
     const { data } = await axios.patch(`${VITE_BASE_URL}/users/resetPassword`, {
       token,
@@ -113,9 +101,7 @@ export async function getUsersLink() {
   const token = Cookies.get("jwt");
   try {
     const { data } = await axios.get(`${VITE_BASE_URL}/links`, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     return data;
@@ -128,9 +114,7 @@ export async function createUserLink(links: LinkProps[]) {
   const token = Cookies.get("jwt");
   try {
     const { data } = await axios.post(`${VITE_BASE_URL}/links`, links, {
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
+      headers: { Authorization: `Bearer ${token}` },
     });
 
     return data;
@@ -143,11 +127,7 @@ export async function updateUserProfile({
   firstName,
   lastName,
   photo,
-}: {
-  firstName: string;
-  lastName: string;
-  photo: string;
-}) {
+}: UserProfileType) {
   const token = Cookies.get("jwt");
   const email = Cookies.get("userMail");
   try {
@@ -159,11 +139,7 @@ export async function updateUserProfile({
         email,
         photo,
       },
-      {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      },
+      { headers: { Authorization: `Bearer ${token}` } },
     );
 
     return data;

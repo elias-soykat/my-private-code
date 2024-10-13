@@ -1,20 +1,18 @@
+import Cookies from "js-cookie";
+import { useState } from "react";
+import { HiOutlineLink } from "react-icons/hi";
+import { MdOutlineArrowRightAlt } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { LinkProps } from "../contexts/LinksContext";
 import { getBgColor, getCorrespondingLogo } from "../utils/helper";
-import { MdOutlineArrowRightAlt } from "react-icons/md";
+import Loader from "./Loader";
 import { useGetOfflineLinks } from "./useGetOfflineLinks";
 import { useGetOfflineUser } from "./useGetOfflineUser";
-import { HiOutlineLink } from "react-icons/hi";
-import Loader from "./Loader";
-import Cookies from "js-cookie";
-import { useState } from "react";
 
-function PreviewPage() {
+export default function PreviewPage() {
   const [isCopied, setIsCopied] = useState(false);
-
   const { isOfflineLinksPending, offlineLinks } = useGetOfflineLinks();
   const { isOfflineUserPending, offlineUser } = useGetOfflineUser();
-
   const navigate = useNavigate();
 
   const userId = Cookies.get("userId");
@@ -31,7 +29,6 @@ function PreviewPage() {
   }
 
   if (isOfflineLinksPending || isOfflineUserPending) return <Loader />;
-
   if (!offlineUser && !offlineLinks) navigate("/login");
 
   const user = offlineUser.data.user[0];
@@ -104,5 +101,3 @@ function PreviewPage() {
     </section>
   );
 }
-
-export default PreviewPage;

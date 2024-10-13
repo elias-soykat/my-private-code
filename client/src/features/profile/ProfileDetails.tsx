@@ -12,6 +12,7 @@ type FormData = {
   firstName: string;
   lastName: string;
 };
+
 type ProfileDetailsProps = {
   register: UseFormRegister<FormData>;
   errors: FieldErrors<FormData>;
@@ -20,7 +21,7 @@ type ProfileDetailsProps = {
   onSubmitData: (data: FormData) => void;
 };
 
-function ProfileDetails({
+export default function ProfileDetails({
   register,
   errors,
   handleSubmit,
@@ -32,7 +33,6 @@ function ProfileDetails({
 
   const handlePhotoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const newPhoto = event.target.files![0];
-
     const reader = new FileReader();
     reader.readAsDataURL(newPhoto);
     reader.onloadend = () => {
@@ -177,5 +177,3 @@ function ProfileDetails({
     </div>
   );
 }
-
-export default ProfileDetails;

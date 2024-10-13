@@ -1,4 +1,4 @@
-function SaveBtn({
+export default function SaveBtn({
   disabled,
   onSave,
 }: {
@@ -15,5 +15,3 @@ function SaveBtn({
     </button>
   );
 }
-
-export default SaveBtn;

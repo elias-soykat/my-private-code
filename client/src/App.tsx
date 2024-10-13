@@ -1,17 +1,13 @@
-import { Suspense, lazy } from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
-
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
-
+import { Suspense, lazy } from "react";
+import { Toaster } from "react-hot-toast";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { LinksProvider } from "./contexts/LinksContext";
 import { UsersProvider } from "./contexts/UserProfileContext";
-
 import AppLayout from "./ui/AppLayout";
 import Loader from "./ui/Loader";
 import ProtectedRoute from "./ui/ProtectedRoute";
-
-import { Toaster } from "react-hot-toast";
 
 const Signup = lazy(() => import("./authentication/Signup"));
 const Login = lazy(() => import("./authentication/Login"));
@@ -36,7 +32,7 @@ const queryClient = new QueryClient({
   },
 });
 
-function App() {
+export default function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <ReactQueryDevtools initialIsOpen={false} />
@@ -91,5 +87,3 @@ function App() {
     </QueryClientProvider>
   );
 }
-
-export default App;

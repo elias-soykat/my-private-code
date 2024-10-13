@@ -1,6 +1,6 @@
 import { useQuery } from "@tanstack/react-query";
-import { getOfflineUserLinks } from "../utils/api";
 import { useParams } from "react-router-dom";
+import { getOfflineUserLinks } from "../utils/api";
 
 export function useGetOfflineLinks() {
   const { id } = useParams();

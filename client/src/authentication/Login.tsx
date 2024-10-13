@@ -8,9 +8,9 @@ type FormData = {
   email: string;
   password: string;
 };
-function Login() {
-  const { register, handleSubmit, formState } = useForm<FormData>();
 
+export default function Login() {
+  const { register, handleSubmit, formState } = useForm<FormData>();
   const { errors } = formState;
   const { isLoggingIn, loginFn } = useLogin();
 
@@ -126,5 +126,3 @@ function Login() {
     </section>
   );
 }
-
-export default Login;

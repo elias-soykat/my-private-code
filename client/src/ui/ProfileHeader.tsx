@@ -1,25 +1,23 @@
-import { Link, useLocation } from "react-router-dom";
-import Logo from "./Logo";
-import { HiOutlineLink } from "react-icons/hi";
-import { FaRegUserCircle } from "react-icons/fa";
-import { useEffect, useState } from "react";
-import Logout from "./Logout";
 import Cookies from "js-cookie";
+import { useEffect, useState } from "react";
+import { FaRegUserCircle } from "react-icons/fa";
+import { HiOutlineLink } from "react-icons/hi";
+import { Link, useLocation } from "react-router-dom";
+import { useCreateUserLink } from "../features/links/useCreateUserLink";
 import { useUserLink } from "../features/links/useUserLink";
 import { useGetUserProfile } from "../features/profile/useGetUserProfile";
-import { useCreateUserLink } from "../features/links/useCreateUserLink";
 import { useUpdateProfile } from "../features/profile/useUpdateProfile";
-import { useLogout } from "./useLogout";
+import Logo from "./Logo";
+import Logout from "./Logout";
 import TransparentLoader from "./TransparentLoader";
+import { useLogout } from "./useLogout";
 
-function ProfileHeader() {
+export default function ProfileHeader() {
   const { isFetching } = useUserLink();
   const { isPending } = useGetUserProfile();
   const { isCreating } = useCreateUserLink();
-
   const { isUpdating } = useUpdateProfile();
   const { isLogoutPending } = useLogout();
-
   const location = useLocation();
 
   const [pathname, setPathname] = useState(location.pathname);
@@ -73,5 +71,3 @@ function ProfileHeader() {
     </header>
   );
 }
-
-export default ProfileHeader;

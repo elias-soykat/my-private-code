@@ -1,16 +1,14 @@
 import Cookies from "js-cookie";
-import { ReactNode } from "react";
+import { ReactNode, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-function ProtectedRoute({ children }: { children: ReactNode }) {
+export default function ProtectedRoute({ children }: { children: ReactNode }) {
   const jwt = Cookies.get("jwt");
   const navigate = useNavigate();
 
-  if (!jwt) {
-    navigate("/login");
-  }
+  useEffect(() => {
+    if (!jwt) navigate("/login");
+  }, [jwt, navigate]);
 
   return children;
 }
-
-export default ProtectedRoute;

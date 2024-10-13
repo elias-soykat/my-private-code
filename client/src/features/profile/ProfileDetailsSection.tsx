@@ -1,35 +1,31 @@
-import ProfilePhoneMockup from "../../ui/ProfilePhoneMockup";
-import { useUserLink } from "../links/useUserLink";
-import Loader from "../../ui/Loader";
-import ProfileDetails from "./ProfileDetails";
-import SaveBtn from "../../ui/SaveBtn";
 import { useForm } from "react-hook-form";
 import { useUserContext } from "../../contexts/UserProfileContext";
-import { useUpdateProfile } from "./useUpdateProfile";
-import { useGetUserProfile } from "./useGetUserProfile";
-import { useCreateUserLink } from "../links/useCreateUserLink";
-import { useLogout } from "../../ui/useLogout";
-import TransparentLoader from "../../ui/TransparentLoader";
+import Loader from "../../ui/Loader";
 import ProfileHeader from "../../ui/ProfileHeader";
+import ProfilePhoneMockup from "../../ui/ProfilePhoneMockup";
+import SaveBtn from "../../ui/SaveBtn";
+import TransparentLoader from "../../ui/TransparentLoader";
+import { useLogout } from "../../ui/useLogout";
+import { useCreateUserLink } from "../links/useCreateUserLink";
+import { useUserLink } from "../links/useUserLink";
+import ProfileDetails from "./ProfileDetails";
+import { useGetUserProfile } from "./useGetUserProfile";
+import { useUpdateProfile } from "./useUpdateProfile";
 
 type FormData = {
   firstName: string;
   lastName: string;
 };
 
-function ProfileDetailsSection() {
+export default function ProfileDetailsSection() {
   const { isFetching } = useUserLink();
   const { isPending } = useGetUserProfile();
   const { isCreating } = useCreateUserLink();
-
   const { updateProfile, isUpdating } = useUpdateProfile();
-
   const { isLogoutPending } = useLogout();
   const { register, handleSubmit, formState } = useForm<FormData>();
-
-  const { errors } = formState;
-
   const { updateFirstName, updateLastName, photo } = useUserContext();
+  const { errors } = formState;
 
   function onSubmitData(data: FormData): void {
     updateProfile(
@@ -72,5 +68,3 @@ function ProfileDetailsSection() {
     </main>
   );
 }
-
-export default ProfileDetailsSection;

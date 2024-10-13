@@ -1,5 +1,6 @@
-function Logo() {
+export default function Logo() {
   const isMobile = window.screen.width <= 768;
+
   return (
     <img
       src={`${isMobile ? "./logo-devlinks-small.svg" : "./logo-devlinks-large.svg"}`}
@@ -8,5 +9,3 @@ function Logo() {
     />
   );
 }
-
-export default Logo;
