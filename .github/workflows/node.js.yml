@@ -17,6 +17,10 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
           cache: "npm"
+      - name: Install dependencies
+        working-directory: ./server
+        run: yarn
+        
       - run: npm ci
       - run: |
           touch .env
