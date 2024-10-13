@@ -22,7 +22,11 @@ jobs:
         working-directory: ./server
         run: yarn
 
-      - run: |
-          touch .env
-          echo "${{ secrets.PROD_ENV_FILE }}" > .env
-      - run: pm2 restart devlink-app-api
+      - name: Create .env file
+        run: touch .env
+
+      - name: Share production environment file
+        run: echo "${{ secrets.PROD_ENV_FILE }}" > .env
+
+      - name: Start PM2 service
+        run: pm2 restart devlink-app-api
