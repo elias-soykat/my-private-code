@@ -40,7 +40,7 @@ Users should be able to:
 
 ### Links
 
-- Solution URL: [https://github.com/Olatoyan/link-sharing-app](https://github.com/Olatoyan/link-sharing-app)
+- Github URL: [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
 - Live Site URL: [https://toyan-devlinks.vercel.app/](https://toyan-devlinks.vercel.app/)
 
 ## My process
@@ -55,8 +55,3 @@ Users should be able to:
 - [MongoDB Atlas](https://www.mongodb.com/atlas/database) - For cloud-based database management
 - [React Query](https://react-query.tanstack.com/) - For efficient data fetching
 - [React Hot Toast](https://react-hot-toast.com/) - For user-friendly notifications
-
-## Author
-
-- Frontend Mentor - [@olatoyan](https://www.frontendmentor.io/profile/olatoyan)
-- Twitter - [@Toyan](https://www.twitter.com/_annonnymouss_)
