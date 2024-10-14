@@ -41,7 +41,7 @@ Users should be able to:
 ### Links
 
 - Github URL: [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
-- Live Site URL: [https://toyan-devlinks.vercel.app/](https://toyan-devlinks.vercel.app/)
+- Live Site URL: [https://devlink-sharing-apps.netlify.app](https://devlink-sharing-apps.netlify.app)
 
 ## My process
 
