@@ -26,7 +26,7 @@ exports.signup = catchAsync(async (req, res, next) => {
   const verificationToken = newUser.createEmailVerificationToken();
   await newUser.save();
 
-  const verificationLink = `${config.BACKEND_LIVE_URL}/verify-email?token=${verificationToken}`;
+  const verificationLink = `${config.FRONTEND_LIVE_URL}/verify-email?token=${verificationToken}`;
   const emailOptions = {
     email: req.body.email,
     subject: 'Welcome to DevLinks! Confirm Your Email Address',
@@ -140,7 +140,7 @@ exports.forgotPassword = catchAsync(async (req, res, next) => {
   const resetPasswordToken = user.createPasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  const resetPasswordLink = `${config.BACKEND_LIVE_URL}/reset-password?token=${resetPasswordToken}`;
+  const resetPasswordLink = `${config.FRONTEND_LIVE_URL}/reset-password?token=${resetPasswordToken}`;
   const emailOptions = {
     email: req.body.email,
     subject: 'DevLinks - Reset Password (Expires in 10 Minutes)',

@@ -4,7 +4,7 @@ module.exports = {
   NODE_ENV: process.env.NODE_ENV,
   PORT: process.env.PORT || 3001,
   MONGO_URI: process.env.MONGO_URI,
-  BACKEND_LIVE_URL: process.env.BACKEND_LIVE_URL,
+  FRONTEND_LIVE_URL: process.env.FRONTEND_LIVE_URL,
   JWT_COOKIES_EXPIRES_IN: process.env.JWT_COOKIES_EXPIRES_IN,
   JWT_SECRET: process.env.JWT_SECRET,
   JWT_EXPIRES_IN: process.env.JWT_EXPIRES_IN,

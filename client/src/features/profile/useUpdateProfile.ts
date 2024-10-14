@@ -12,8 +12,8 @@ export function useUpdateProfile() {
     onSuccess: () => {
       toast.success("Profile updated successfully");
     },
-    onError: (error: { response: { data: { message: string } } }) => {
-      toast.error(error.response.data.message);
+    onError: (error: { message: string }) => {
+      toast.error(error.message);
     },
   });
 
