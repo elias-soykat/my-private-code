@@ -2,7 +2,7 @@ const process = require('process');
 
 module.exports = {
   NODE_ENV: process.env.NODE_ENV,
-  PORT: process.env.PORT || 80,
+  PORT: process.env.PORT || 3001,
   MONGO_URI: process.env.MONGO_URI,
   BACKEND_LIVE_URL: process.env.BACKEND_LIVE_URL,
   JWT_COOKIES_EXPIRES_IN: process.env.JWT_COOKIES_EXPIRES_IN,
