@@ -69,7 +69,6 @@ userSchema.pre('save', async function (next) {
 
 userSchema.methods.createEmailVerificationToken = function () {
   const verificationToken = crypto.randomBytes(32).toString('hex');
-
   this.emailVerificationToken = crypto
     .createHash('sha256')
     .update(verificationToken)
@@ -87,7 +86,6 @@ userSchema.methods.matchPassword = async function (
 
 userSchema.methods.createPasswordResetToken = function () {
   const resetToken = crypto.randomBytes(32).toString('hex');
-
   this.passwordResetToken = crypto
     .createHash('sha256')
     .update(resetToken)

@@ -12,8 +12,8 @@ export function UseSignup() {
     onSuccess: (data) => {
       toast.success(data.message);
     },
-    onError: (error: { message: string }) => {
-      toast.error(error.message);
+    onError: (error: { response: { data: { message: string } } }) => {
+      toast.error(error.response.data.message);
     },
   });
 

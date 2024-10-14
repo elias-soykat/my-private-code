@@ -6,7 +6,9 @@
   "scripts": {
     "start": "node bootstrap.js",
     "start:prod": "SET NODE_ENV=production && node bootstrap.js",
-    "dev": "nodemon bootstrap.js"
+    "dev": "nodemon bootstrap.js",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "license": "ISC",
   "dependencies": {

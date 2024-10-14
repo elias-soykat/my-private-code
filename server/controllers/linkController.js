@@ -1,12 +1,12 @@
 const Link = require('../model/linkModel');
-const catchAsync = require('./../utils/catchAsync');
+const { catchAsync } = require('./../utils/catchAsync');
 const User = require('../model/userModel');
 
 exports.addLink = catchAsync(async (req, res) => {
   const userId = req.user._id;
   const user = await User.findById(userId);
-  const sentLinkIds = req.body.map((linkData) => linkData.id);
 
+  const sentLinkIds = req.body.map((linkData) => linkData.id);
   const linksToDeleteIds = user.links.filter(
     (linkId) => !sentLinkIds.includes(linkId)
   );
@@ -24,23 +24,22 @@ exports.addLink = catchAsync(async (req, res) => {
     const newLink = await Link.create({ id, name, link });
     user.links.push(newLink);
     await user.save({ validateBeforeSave: false });
-
     createdLinks.push(newLink);
   }
 
-  res.status(201).json({ status: 'success', data: createdLinks });
+  return res.status(201).json({ status: 'success', data: createdLinks });
 });
 
 exports.getAllLinksPerUser = catchAsync(async (req, res) => {
   const userId = req.user._id;
-
-  const user = await User.findById(userId).populate('links').select('-__v');
-  res.status(200).json({ status: 'success', data: { links: user.links } });
+  const user = await User.findById(userId).populate('links');
+  return res
+    .status(200)
+    .json({ status: 'success', data: { links: user.links } });
 });
 
 exports.getAllLinksPerUserOffline = catchAsync(async (req, res) => {
   const userId = req.query.id;
-
-  const links = await User.findById(userId).populate('links').select('-__v');
-  res.status(200).json({ status: 'success', data: { links } });
+  const links = await User.findById(userId).populate('links');
+  return res.status(200).json({ status: 'success', data: { links } });
 });

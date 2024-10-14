@@ -12,8 +12,8 @@ export function useLogin() {
       toast.success("Login successfully");
       navigate("/add-links");
     },
-    onError: (error: { message: string }) => {
-      toast.error(error.message);
+    onError: (error: { response: { data: { message: string } } }) => {
+      toast.error(error.response.data.message);
     },
   });
 

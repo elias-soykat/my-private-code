@@ -20,7 +20,9 @@ function createSendToken(user, statusCode, res) {
 
   res.cookie('jwt', token, cookieOptions);
   delete user.password;
-  res.status(statusCode).json({ status: 'success', token, data: { user } });
+  return res
+    .status(statusCode)
+    .json({ status: 'success', token, data: { user } });
 }
 
 module.exports = { createSendToken, signToken };
