@@ -134,11 +134,8 @@ export default function LinkItems({
     setLinks(link.name);
   }, [link]);
 
-
   return (
-    <div
-      className="mb-[2.4rem] rounded-[1.2rem] bg-[#fafafa] p-8"
-    >
+    <div className="mb-[2.4rem] rounded-[1.2rem] bg-[#fafafa] p-8">
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h3 className="text-[1.6rem] font-bold leading-[2.4rem] text-[#737373]">
@@ -194,11 +191,9 @@ export default function LinkItems({
                   ease: "easeInOut",
                   type: "spring",
                 }}
-                className="absolute top-[6rem] z-[3] flex  h-[30rem] w-full flex-col gap-[1.2rem] overflow-y-scroll rounded-[0.8rem] border border-solid border-[#d9d9d9] bg-white p-[1.6rem] shadow-dark-sh"
+                className="absolute top-[6rem] z-[3] flex h-[30rem] w-full flex-col gap-[1.2rem] overflow-y-scroll rounded-[0.8rem] border border-solid border-[#d9d9d9] bg-white p-[1.6rem] shadow-dark-sh"
               >
-                <motion.div
-                  className="flex flex-col gap-[1.2rem]"
-                >
+                <motion.div className="flex flex-col gap-[1.2rem]">
                   {socialPlatforms.map((platform) => (
                     <LinkPlatformItems
                       index={index}
@@ -248,4 +243,3 @@ export default function LinkItems({
     </div>
   );
 }
-

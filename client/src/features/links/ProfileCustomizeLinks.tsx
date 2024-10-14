@@ -27,20 +27,19 @@ export default function ProfileCustomizeLinks({
         <span>Add link</span>
       </button>
 
-        {links.length > 0 ? (
-          links.map((link, index) => (
-            <LinkItems
-                key={index}
-                index={index}
-                link={link}
-                number={index + 1}
-                isCreating={isCreating}
-            />
-          ))
-        ) : (
-          <EmptyLinksBox />
+      {links.length > 0 ? (
+        links.map((link, index) => (
+          <LinkItems
+            key={index}
+            index={index}
+            link={link}
+            number={index + 1}
+            isCreating={isCreating}
+          />
+        ))
+      ) : (
+        <EmptyLinksBox />
       )}
     </div>
   );
 }
-
