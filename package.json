@@ -1,0 +1,12 @@
+{
+  "scripts": {
+    "client": "npm run dev --prefix client",
+    "server": "npm run dev --prefix server",
+    "dev": "concurrently \"npm run client\" \"npm run server\"",
+    "env": "cp client/example.env client/.env && cp server/example.env server/.env"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "concurrently": "^9.0.1"
+  }
+}
