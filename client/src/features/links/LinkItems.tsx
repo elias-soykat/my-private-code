@@ -1,31 +1,26 @@
-import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
-import { HiOutlineLink } from "react-icons/hi";
-import { PiGithubLogoFill, PiDevToLogoFill } from "react-icons/pi";
+import { useEffect, useState } from "react";
 import {
-  SiFrontendmentor,
+  FaCodepen,
+  FaFacebook,
+  FaFreeCodeCamp,
+  FaLinkedin,
+  FaStackOverflow,
+  FaTwitch,
+  FaYoutube,
+} from "react-icons/fa";
+import { HiOutlineLink } from "react-icons/hi";
+import { IoLogoTwitter } from "react-icons/io";
+import { PiDevToLogoFill, PiGithubLogoFill } from "react-icons/pi";
+import {
   SiCodewars,
+  SiFrontendmentor,
   SiGitlab,
   SiHashnode,
 } from "react-icons/si";
-import { IoLogoTwitter } from "react-icons/io";
-import {
-  FaLinkedin,
-  FaYoutube,
-  FaFacebook,
-  FaTwitch,
-  FaCodepen,
-  FaFreeCodeCamp,
-  FaStackOverflow,
-} from "react-icons/fa";
-import LinkPlatformItems from "./LinkPlatformItems";
-
 import { LinkProps, useLinks } from "../../contexts/LinksContext";
 import { getCorrespondingLogo, getRightProfileUrl } from "../../utils/helper";
-
-import { useSortable } from "@dnd-kit/sortable";
-import { CSS } from "@dnd-kit/utilities";
-import { useDraggable } from "@dnd-kit/core";
+import LinkPlatformItems from "./LinkPlatformItems";
 
 const socialPlatforms = [
   {
@@ -100,7 +95,7 @@ const socialPlatforms = [
   },
 ];
 
-function LinkItems({
+export default function LinkItems({
   link,
   number,
   index,
@@ -134,38 +129,18 @@ function LinkItems({
     }
   }
 
-  const { id } = link;
-
-  const { listeners, setNodeRef, transform, transition } = useSortable({ id });
-
-  const style = {
-    transition,
-    transform: CSS.Transform.toString(transform),
-  };
-
-  const { attributes: draggableAttributes } = useDraggable({
-    id: `item-${id}`,
-  });
-
   useEffect(() => {
     setLinkUrl(link.link || getRightProfileUrl(link.name)!);
     setLinks(link.name);
   }, [link]);
+
+
   return (
     <div
       className="mb-[2.4rem] rounded-[1.2rem] bg-[#fafafa] p-8"
-      ref={setNodeRef}
-      style={style}
     >
       <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
-          <img
-            src="icon-drag-and-drop.svg"
-            alt="icon"
-            className="h-[2.4rem] w-[1.2rem] cursor-grab touch-none mobile:hidden"
-            {...draggableAttributes}
-            {...listeners}
-          />
           <h3 className="text-[1.6rem] font-bold leading-[2.4rem] text-[#737373]">
             Link #{number}
           </h3>
@@ -222,20 +197,6 @@ function LinkItems({
                 className="absolute top-[6rem] z-[3] flex  h-[30rem] w-full flex-col gap-[1.2rem] overflow-y-scroll rounded-[0.8rem] border border-solid border-[#d9d9d9] bg-white p-[1.6rem] shadow-dark-sh"
               >
                 <motion.div
-                  // initial="initial"
-                  // animate="animate"
-                  // exit="exit"
-                  // variants={{
-                  //   animate: {
-                  //     transition: { staggerChildren: 0.1 },
-                  //   },
-                  //   exit: {
-                  //     transition: {
-                  //       staggerChildren: 0.05,
-                  //       staggerDirection: -1,
-                  //     },
-                  //   },
-                  // }}
                   className="flex flex-col gap-[1.2rem]"
                 >
                   {socialPlatforms.map((platform) => (
@@ -288,4 +249,3 @@ function LinkItems({
   );
 }
 
-export default LinkItems;

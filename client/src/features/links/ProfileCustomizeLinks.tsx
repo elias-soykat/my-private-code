@@ -1,50 +1,14 @@
-import {
-  DndContext,
-  DragEndEvent,
-  KeyboardSensor,
-  PointerSensor,
-  TouchSensor,
-  closestCorners,
-  useSensor,
-  useSensors,
-} from "@dnd-kit/core";
-import {
-  SortableContext,
-  arrayMove,
-  sortableKeyboardCoordinates,
-  verticalListSortingStrategy,
-} from "@dnd-kit/sortable";
 import { HiOutlinePlus } from "react-icons/hi2";
 import { useLinks } from "../../contexts/LinksContext";
 import EmptyLinksBox from "./EmptyLinksBox";
 import LinkItems from "./LinkItems";
 
-function ProfileCustomizeLinks({ isCreating }: { isCreating: boolean }) {
-  const { links, addLink, setLinks } = useLinks();
-
-  function getLinksPosition(id: number): number {
-    return links.findIndex((link) => link.id === id);
-  }
-
-  const sensors = useSensors(
-    useSensor(PointerSensor),
-    useSensor(TouchSensor),
-    useSensor(KeyboardSensor, {
-      coordinateGetter: sortableKeyboardCoordinates,
-    }),
-  );
-
-  function handleDragEnd(event: DragEndEvent) {
-    const { active, over } = event;
-    if (!over || active.id === over.id) return;
-
-    const originalPosition = getLinksPosition(+active.id);
-    const newPosition = getLinksPosition(+over.id);
-
-    const updatedLinks = arrayMove(links, originalPosition, newPosition);
-    setLinks(updatedLinks);
-  }
-
+export default function ProfileCustomizeLinks({
+  isCreating,
+}: {
+  isCreating: boolean;
+}) {
+  const { links, addLink } = useLinks();
   return (
     <div className="flex flex-col bg-white px-14 py-12 pb-0 mobile:p-[2.4rem] mobile:pb-0">
       <h1 className="block pb-[0.8rem] text-[3.1rem] font-bold leading-[4.8rem] text-[#333] tablet:hidden mobile:text-[2.4rem] mobile:leading-[3.5rem]">
@@ -63,29 +27,20 @@ function ProfileCustomizeLinks({ isCreating }: { isCreating: boolean }) {
         <span>Add link</span>
       </button>
 
-      <DndContext
-        collisionDetection={closestCorners}
-        onDragEnd={handleDragEnd}
-        sensors={sensors}
-      >
         {links.length > 0 ? (
-          <SortableContext items={links} strategy={verticalListSortingStrategy}>
-            {links.map((link, index) => (
-              <LinkItems
+          links.map((link, index) => (
+            <LinkItems
                 key={index}
                 index={index}
                 link={link}
                 number={index + 1}
                 isCreating={isCreating}
-              />
-            ))}
-          </SortableContext>
+            />
+          ))
         ) : (
           <EmptyLinksBox />
-        )}
-      </DndContext>
+      )}
     </div>
   );
 }
 
-export default ProfileCustomizeLinks;
