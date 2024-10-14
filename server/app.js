@@ -14,7 +14,6 @@ const app = express();
 if (config.NODE_ENV === 'production') app.use(morgan('dev'));
 
 app.use(cors());
-app.options('*', cors());
 app.use(express.json({ limit: '10mb' }));
 app.use(mongoSanitize());
 app.use(xss());
