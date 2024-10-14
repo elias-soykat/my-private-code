@@ -30,7 +30,7 @@ export default function Login() {
             Login
           </h1>
           <h2 className="pb-16 text-[1.6rem] leading-[2.4rem] text-[#737373]">
-            Add your details below to get back into the app
+            Add your details below to get back into the app.
           </h2>
           <form
             className="flex flex-col space-y-[2.4rem]"
