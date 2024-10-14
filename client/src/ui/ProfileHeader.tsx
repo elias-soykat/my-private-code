@@ -33,6 +33,7 @@ export default function ProfileHeader() {
 
       <div className="flex items-center gap-[1.6rem] tablet:gap-4">
         <Link
+          aria-label="Links"
           to="/add-links"
           className={`flex items-center gap-[0.8rem] rounded-[0.8rem] px-11 py-4 text-[1.6rem] font-semibold leading-[2.4rem] mobile:px-[1.6rem] ${pathname === "/add-links" ? "bg-[#efebff] text-[#633cff]" : "text-[#737373] hover:text-[#633cff]"}`}
         >
@@ -40,6 +41,7 @@ export default function ProfileHeader() {
           <p className="mobile:hidden">Links</p>
         </Link>
         <Link
+          aria-label="Profile Details"
           to="/profile"
           className={`flex items-center gap-[0.8rem] rounded-[0.8rem] px-11 py-4 text-[1.6rem] font-semibold leading-[2.4rem] text-[#633cff] mobile:px-[1.6rem] ${pathname === "/profile" ? "bg-[#efebff] text-[#633cff]" : "text-[#737373] hover:text-[#633cff]"}`}
         >

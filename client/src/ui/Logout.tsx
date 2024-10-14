@@ -6,6 +6,8 @@ export default function Logout() {
 
   return (
     <button
+      type="button"
+      aria-label="Logout"
       className="flex items-center gap-4 text-[1.6rem] text-[#737373] transition-none hover:text-[#633cff] mobile:px-[1.6rem]"
       onClick={() => logout()}
     >
