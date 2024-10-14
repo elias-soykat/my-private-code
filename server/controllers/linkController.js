@@ -1,12 +1,18 @@
 const Link = require('../model/linkModel');
-const { catchAsync } = require('./../utils/catchAsync');
+const { catchAsync, sendError } = require('./../utils/catchAsync');
 const User = require('../model/userModel');
 
 exports.addLink = catchAsync(async (req, res) => {
   const userId = req.user._id;
   const user = await User.findById(userId);
 
-  const sentLinkIds = req.body.map((linkData) => linkData.id);
+  const sentLinkIds = req.body.map((linkData) => {
+    if (!linkData.link) {
+      return sendError(`Full user link is required`, res, 400);
+    }
+    return linkData.id;
+  });
+
   const linksToDeleteIds = user.links.filter(
     (linkId) => !sentLinkIds.includes(linkId)
   );

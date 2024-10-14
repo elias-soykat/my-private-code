@@ -1,3 +1,4 @@
+import axios from "axios";
 import toast from "react-hot-toast";
 import { useLinks } from "../../contexts/LinksContext";
 import Loader from "../../ui/Loader";
@@ -25,8 +26,12 @@ export default function ProfileLinksSection() {
       onSuccess: () => {
         toast.success("Link created successfully");
       },
-      onError: (error) => {
-        toast.error(error.message);
+      onError: (error: Error) => {
+        if (axios.isAxiosError(error) && error.response) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error("An unexpected error occurred");
+        }
       },
     });
   }

@@ -180,7 +180,6 @@ export default function LinkItems({
               />
             </button>
 
-            {/* <AnimatePresence mode="wait"> */}
             {isLinkBoxOpen && (
               <motion.div
                 initial={{ opacity: 0 }}
@@ -209,7 +208,6 @@ export default function LinkItems({
                 </motion.div>
               </motion.div>
             )}
-            {/* </AnimatePresence> */}
           </div>
         </div>
 
