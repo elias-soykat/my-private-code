@@ -11,7 +11,7 @@
 ## Links
 
 - Github URL : [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
-- Live Frontend URL: [https://devlink-sharing-apps.netlify.app](https://devlink-sharing-apps.netlify.app)
+- Live Frontend URL: [https://devlink-sharing-app.netlify.app/add-links](https://devlink-sharing-app.netlify.app/add-links)
 - Live Backend URL: [https://54.224.221.2/api/v1](https://54.224.221.2/api/v1)
 
 ## Features
