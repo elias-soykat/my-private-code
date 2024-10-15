@@ -11,7 +11,7 @@
 
 - Github URL : [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
 - Live Frontend URL: [https://devlink-sharing-apps.netlify.app](https://devlink-sharing-apps.netlify.app)
-- Live Backend URL: [https://54.224.221.2](https://54.224.221.2)
+- Live Backend URL: [https://54.224.221.2/api/v1](https://54.224.221.2/api/v1)
 
 ## Features
 
@@ -33,3 +33,9 @@
 - [MongoDB Atlas](https://www.mongodb.com/atlas/database) - For cloud-based database management
 - [React Query](https://react-query.tanstack.com/) - For efficient data fetching
 - [React Hot Toast](https://react-hot-toast.com/) - For user-friendly notifications
+
+## Hosting
+
+- Frontend : [Netlify](https://www.netlify.com/)
+- Backend : [AWS EC2](https://aws.amazon.com/ec2)
+- Database : [MongoDB Atlas](https://www.mongodb.com/atlas/database)
