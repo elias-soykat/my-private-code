@@ -21,7 +21,7 @@ export default function ProfileCustomizeLinks({
       </h3>
       <button
         className="mb-[2.4rem] flex items-center justify-center gap-[0.8rem] rounded-[0.8rem] border border-solid border-[#633cff] px-11 py-4 text-[1.6rem] font-medium leading-[2.4rem] text-[#633cff] hover:bg-[#efebff] disabled:cursor-not-allowed disabled:border-[#ccc] disabled:bg-[#ccc] disabled:text-[#666]"
-        onClick={() => addLink("Github", "https://github.com/users", Date.now())}
+        onClick={() => addLink("Github", "https://github.com/user/", Date.now())}
         disabled={links.length === 5}
       >
         <HiOutlinePlus />
