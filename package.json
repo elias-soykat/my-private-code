@@ -4,7 +4,7 @@
     "server": "npm run dev --prefix server",
     "dev": "concurrently \"npm run client\" \"npm run server\"",
     "env": "cp client/example.env client/.env && cp server/example.env server/.env",
-    "install": "npm install --prefix client && npm install --prefix server"
+    "install-all": "npm install && npm install --prefix client && npm install --prefix server"
   },
   "license": "MIT",
   "dependencies": {
