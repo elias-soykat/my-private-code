@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import {
   FaCodepen,
   FaFacebook,
-  FaFreeCodeCamp,
   FaLinkedin,
   FaStackOverflow,
   FaTwitch,
@@ -12,12 +11,7 @@ import {
 import { HiOutlineLink } from "react-icons/hi";
 import { IoLogoTwitter } from "react-icons/io";
 import { PiDevToLogoFill, PiGithubLogoFill } from "react-icons/pi";
-import {
-  SiCodewars,
-  SiFrontendmentor,
-  SiGitlab,
-  SiHashnode,
-} from "react-icons/si";
+import { SiCodewars, SiGitlab, SiHashnode } from "react-icons/si";
 import { LinkProps, useLinks } from "../../contexts/LinksContext";
 import { getCorrespondingLogo, getRightProfileUrl } from "../../utils/helper";
 import LinkPlatformItems from "./LinkPlatformItems";
@@ -32,11 +26,6 @@ const socialPlatforms = [
     name: "Dev.to",
     icon: <PiDevToLogoFill size={"1.6rem"} />,
     url: "https://dev.to/",
-  },
-  {
-    name: "Frontend Mentor",
-    icon: <SiFrontendmentor size={"1.6rem"} />,
-    url: "https://www.frontendmentor.io/profile/",
   },
   {
     name: "Codewars",
@@ -82,11 +71,6 @@ const socialPlatforms = [
     name: "Codepen",
     icon: <FaCodepen size={"1.6rem"} />,
     url: "https://codepen.io/",
-  },
-  {
-    name: "freeCodeCamp",
-    icon: <FaFreeCodeCamp size={"1.6rem"} />,
-    url: "https://www.freecodecamp.org/news/author",
   },
   {
     name: "StackOverflow",
