@@ -1,11 +1,12 @@
 ## How to run the project
 
 1. Clone the repository : `git clone https://github.com/elias-soykat/devlinks-app.git`
-2. Install dependencies : `npm run install-all`
-3. Create .env files : `npm run env`
-4. Run the project : `npm run dev`
-5. Frontend on : `http://localhost:5173`
-6. Backend on : `http://localhost:3001`
+2. Change directory : `cd devlinks-app`
+3. Install dependencies : `npm run install-all`
+4. Create .env files : `npm run env`
+5. Run the project : `npm run dev`
+6. Frontend on : `http://localhost:5173`
+7. Backend on : `http://localhost:3001`
 
 ## Links
 
