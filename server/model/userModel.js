@@ -10,14 +10,12 @@ const userSchema = new mongoose.Schema(
       minLength: 3,
       maxLength: 20,
       trim: true,
-      validate: [validator.isAlpha, 'First name must only contain letters'],
     },
     lastName: {
       type: String,
       minLength: 3,
       maxLength: 20,
       trim: true,
-      validate: [validator.isAlpha, 'Last name must only contain letters'],
     },
     photo: String,
     email: {
