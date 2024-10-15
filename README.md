@@ -1,4 +1,4 @@
-# How to run the project
+## How to run the project
 
 1. Clone the repository : `git clone https://github.com/elias-soykat/devlinks-app.git`
 2. Install dependencies : `npm run install-all`
@@ -7,19 +7,13 @@
 5. Frontend on : `http://localhost:5173`
 6. Backend on : `http://localhost:3001`
 
-## Link-sharing app
+## Links
 
-This is a solution to the [Link-sharing app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/linksharing-app-Fbt7yweGsT).
+- Github URL : [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
+- Live Frontend URL: [https://devlink-sharing-apps.netlify.app](https://devlink-sharing-apps.netlify.app)
+- Live Backend URL: [https://54.224.221.2](https://54.224.221.2)
 
-## Table of contents
-
-- [Overview](#overview)
-  - [Links](#links)
-  - [Built with](#built-with)
-
-## Overview
-
-### Features
+## Features
 
 - **Easy Link Management:** Create, read, update, and delete links with convenient features like real-time mobile mockup previews and drag-and-drop reorganization.
 - **Personalized Profiles:** Build your own DevLinks profile with a picture, and name, allowing others to easily discover your interests and connect with you.
@@ -29,14 +23,7 @@ This is a solution to the [Link-sharing app challenge on Frontend Mentor](https:
 - **Full-Stack Implementation:** Take your project to the next level by storing link and user data securely in a database.
 - **User Authentication:** Add an extra layer of security by enabling account creation and login functionality.
 
-### Links
-
-- Github URL: [https://github.com/elias-soykat/devlinks-app](https://github.com/elias-soykat/devlinks-app)
-- Live Site URL: [https://devlink-sharing-apps.netlify.app](https://devlink-sharing-apps.netlify.app)
-
-## My process
-
-### Built with
+## Built with
 
 - Semantic HTML5 markup
 - Flexbox and CSS Grid - For layout
