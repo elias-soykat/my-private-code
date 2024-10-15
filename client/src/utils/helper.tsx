@@ -52,22 +52,18 @@ export function getBgColor(name: string) {
 }
 
 export function getRightProfileUrl(name: string) {
-  if (name === "Github") return "https://www.github.com/";
-  if (name === "Dev.to") return "https://www.dev.to/";
-  if (name === "Frontend Mentor")
-    return "https://www.frontendmentor.io/profile/";
-  if (name === "Codewars") return "https://www.codewars.com/users/";
-  if (name === "Gitlab") return "https://www.gitlab.com/";
-  if (name === "Hashnode") return "https://www.hashnode.com/@";
-  if (name === "Twitter") return "https://www.twitter.com/";
-  if (name === "LinkedIn") return "https://www.linkedin.com/in/";
-  if (name === "YouTube") return "https://www.youtube.com/";
-  if (name === "Facebook") return "https://www.facebook.com/";
-  if (name === "Twitch") return "https://www.twitch.tv/";
-  if (name === "Codepen") return "https://www.codepen.io/";
-  if (name === "freeCodeCamp")
-    return "https://www.freecodecamp.org/news/author";
-  if (name === "StackOverflow") return "https://www.stackoverflow.com/users/";
+  if (name === "Github") return "https://www.github.com/users";
+  if (name === "Dev.to") return "https://www.dev.to/users";
+  if (name === "Codewars") return "https://www.codewars.com/users";
+  if (name === "Gitlab") return "https://www.gitlab.com/users";
+  if (name === "Hashnode") return "https://www.hashnode.com/@users";
+  if (name === "Twitter") return "https://www.twitter.com/users";
+  if (name === "LinkedIn") return "https://www.linkedin.com/in/users";
+  if (name === "YouTube") return "https://www.youtube.com/users";
+  if (name === "Facebook") return "https://www.facebook.com/users";
+  if (name === "Twitch") return "https://www.twitch.tv/users";
+  if (name === "Codepen") return "https://www.codepen.io/users";
+  if (name === "StackOverflow") return "https://www.stackoverflow.com/users";
 }
 
 export const handleError = (error: unknown) => {
